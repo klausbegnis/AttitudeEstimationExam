@@ -33,7 +33,7 @@ Summarizing the calculations needed to process these information are presented a
 
 ### Equation 1
 
-$\phi = tan^{-1}\right(\frac{G_y}{G_z})\left$
+$\phi = tan^{-1}(\frac{G_y}{G_z})$
 
 ### Equation 2
 
@@ -45,4 +45,4 @@ $\theta = tan^{-1}\frac{-G_x}{\sqrt{G_y^2 + G_z^2}}$
 
 ### Equation 4
 
-$\theta = tan^{-1}\right(\frac{-G_x}{G_z})\left$
+$\theta = tan^{-1}(\frac{-G_x}{G_z})$
