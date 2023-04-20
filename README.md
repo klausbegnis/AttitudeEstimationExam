@@ -76,5 +76,9 @@ One class was designed for the log reading/writing, `LogReader`, and it's attrib
 | `autoPath`         | string               | private    | Returns default name for output file. It's called only when output path not specfied.                 |
 | `outputLineValue`  | string               | private    | String containing the line to be added at the output file. In the format: timestamp; $\theta$; $\phi$ |
 
+## How to use
 
+### Compiling the code
+
+### Executing the application
 
