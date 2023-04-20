@@ -24,7 +24,6 @@ std::ifstream LogReader::openFile()
 	catch (const std::exception& e)
 	{
 		print("Error ocurred while opening file");
-		printError(e);
 	}
 }
 
