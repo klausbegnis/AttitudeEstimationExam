@@ -126,6 +126,7 @@ void LogReader::readAndTranslate(int g_mode)
 				print(counter);
 				print(' ');
 				print(currentReading.theta);
+				print(currentReading.phi);
 				counter++;
 			}		
 		}

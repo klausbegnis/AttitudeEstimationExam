@@ -24,6 +24,10 @@ struct accelerometerReading
 	
 	void refreshSensitivity(int g_mode)
 	{
+		// checks MMA8451Q configuration register value
+		// and updates the sensitivity used to collect
+		// the sample
+
 		switch (g_mode)
 		{
 		case (g2):
@@ -49,14 +53,15 @@ struct accelerometerReading
 		double solution2DEG;
 		double solution1RAD;
 		double solution2RAD;
+		double quadrant;
 
 		bool sol1OK = false;
 		bool sol2OK = false;
 
 		// calculate solutions
 
-		solution1RAD = -Gx / (sqrt(pow(Gy, 2) + pow(Gz, 2))); // rad
-		solution2RAD = -Gx / Gz; // rad
+		solution1RAD = atan( - Gx / (sqrt(pow(Gy, 2) + pow(Gz, 2)))); // rad
+		solution2RAD = atan( - Gx / Gz); // rad
 
 		solution1DEG = solution1RAD * 180 / M_PI; // degrees
 		solution2DEG = solution2RAD * 180 / M_PI; // degrees
@@ -74,8 +79,33 @@ struct accelerometerReading
 
 		// choose final theta value
 
-		if (sol1OK and sol2OK)
-			theta = atan2(solution1RAD, solution2RAD) * 180 / M_PI;
+		if (sol1OK and sol2OK) {
+			quadrant = atan2(Gx, Gz); // the solution is at the same quadrant
+			//std::cout << solution1DEG << char(32) << solution2DEG << std::endl;
+			if (quadrant / abs(quadrant) > 0) // means that is the positive solution
+			{
+				std::cout << "quadrant >0" << std::endl;
+				if (solution1DEG >= 0)
+				{
+					theta = solution1DEG;
+				}
+				else
+				{
+					theta = solution2DEG;
+				}
+			}
+			else
+			{
+				if (solution1DEG <= 0)
+				{
+					theta = solution1DEG;
+				}
+				else
+				{
+					theta = solution2DEG;
+				}
+			}
+		}
 		else if (sol1OK)
 			theta = solution1DEG;
 		else if (sol2OK)
@@ -87,6 +117,72 @@ struct accelerometerReading
 
 	void solvePhi() {
 		// roll angle -90deg <= phi <= +90deg
+
+		// initialize variables
+		double solution1DEG;
+		double solution2DEG;
+		double solution1RAD;
+		double solution2RAD;
+		double quadrant;
+
+		bool sol1OK = false;
+		bool sol2OK = false;
+
+		// calculate solutions
+
+		solution1RAD = atan(Gy / (sqrt(pow(Gx, 2) + pow(Gz, 2)))); // rad
+		solution2RAD = atan(Gy / Gz); // rad
+
+		solution1DEG = solution1RAD * 180 / M_PI; // degrees
+		solution2DEG = solution2RAD * 180 / M_PI; // degrees
+
+		// check conditions
+
+		if (-90 <= solution1DEG <= 90)
+		{
+			sol1OK = true;
+		}
+		if (-90 <= solution2DEG <= 90)
+		{
+			sol2OK = true;
+		}
+
+		// choose final theta value
+
+		if (sol1OK and sol2OK) {
+			quadrant = atan2(Gy, Gz); // the solution is at the same quadrant
+			//std::cout << solution1DEG << char(32) << solution2DEG << std::endl;
+			if (quadrant/ abs(quadrant) > 0) // means that is the positive solution
+			{
+				std::cout << "quadrant >0" << std::endl;
+				if (solution1DEG >= 0)
+				{
+					phi = solution1DEG;
+				}
+				else
+				{
+					phi = solution2DEG;
+				}
+			}
+			else
+			{
+				if (solution1DEG <= 0)
+				{
+					phi = solution1DEG;
+				}
+				else
+				{
+					phi = solution2DEG;
+				}
+			}
+		}
+		else if (sol1OK)
+			phi = solution1DEG;
+		else if (sol2OK)
+			phi = solution2DEG;
+		else // no solutions available - instability zone
+			phi = INFINITY;
+
 	}
 };
 
