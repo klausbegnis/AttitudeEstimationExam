@@ -32,7 +32,7 @@ Summarizing the calculations needed to process these information are presented a
 
 
 ### Equation 1
-$\HUGE
+
 $\phi = tan^{-1}(\frac{G_y}{G_z})$
 
 ### Equation 2
@@ -46,4 +46,5 @@ $\theta = tan^{-1}\frac{-G_x}{\sqrt{G_y^2 + G_z^2}}$
 ### Equation 4
 
 $\theta = tan^{-1}(\frac{-G_x}{G_z})$
-$
+
+As two solutions are found for each angle, and both with same module but with opposite signals. To find the correct quadrant of the correct response, the function $ATAN2(G_i,G_j)% is used, where for $\theta$ $i = x$ and $j = z$, while $i = y$ and $j = z$ for $\phi$.
