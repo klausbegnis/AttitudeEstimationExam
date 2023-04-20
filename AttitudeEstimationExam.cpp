@@ -1,6 +1,11 @@
 #include <iostream>
+#include "LogReader.h"
+#include <string>
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::string path = "logs/attitude_exam.log";
+    LogReader log = LogReader(path);
+    log.readAndTranslate();
+    
 }
