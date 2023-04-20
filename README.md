@@ -9,7 +9,6 @@ The task consisted of developing an algorithm that reads values from a log file 
 The accelerometer in question is the [MMA8451Q](https://www.nxp.com/docs/en/data-sheet/MMA8451Q.pdf). When the data were aquired, the accelerometer was setted in the 8*g* configuration, this configuration reflects directyly into the sensibility factor from the reading performed, as Table 1 shows.
 
 #### Table 1		
-|---------------|-------------------|
 | Configuration | Sensitivity       |
 |---------------|-------------------|
 | 2*g*          | 4098 [*counts/g*] |
@@ -25,3 +24,17 @@ Summarizing the calculations needed to process these information are presented a
 
 
 #### Table 2
+
+"""{=latex}
+\begin{table}[]
+\begin{tabular}{ll}
+\hline
+\multicolumn{1}{|l|}{Variable} & \multicolumn{1}{l|}{Unit}  \\ \hline
+\multicolumn{1}{|l|}{$\theta$} & \multicolumn{1}{l|}{*deg*} \\ \hline
+\multicolumn{1}{|l|}{$\phi$}   & *deg*                      \\ \hline
+\multicolumn{1}{l|}{$G_x$}     & \multicolumn{1}{l|}{*g*}   \\ \cline{2-2} 
+$G_y$                          & *g*                        \\
+$G_z$                          & *g*                       
+\end{tabular}
+\end{table}
+"""
