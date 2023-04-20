@@ -21,8 +21,11 @@ The values obtained reflected acceleration values in a 3-axis system. To convert
 
 Summarizing the calculations needed to process these information are presented at Equation 1-4, and each variable is presented at Table 2.
 
+### Table 2
 | Variable		| Unit       |
 |---------------|-------------------|
-| $\theta$      | 4098 [*counts/g*] |
-| 4*g*          | 2048 [*counts/g*] |
-| 8*g*          | 1024 [*counts/g*] |
+| $\theta$      | *deg*				|
+| $\phi$        | *deg*	 |
+| $G_x$         | *g*	 |
+| $G_y$         | *g*	 |
+| $G_z$         | *g*	 |
