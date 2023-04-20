@@ -142,7 +142,7 @@ void LogReader::readAndTranslate(int g_mode)
 	std::string currentLine; // line to be read
 
 	std::ofstream outputFile; // output file 
-	outputFile.open(outputPath);
+	outputFile.open(outputPath); // opens output file
 
 	if (not(outputFile.is_open())) // if output file not inserted
 	{
@@ -155,6 +155,12 @@ void LogReader::readAndTranslate(int g_mode)
 
 	if (file.is_open() and outputFile.is_open()) // if the file is opened
 	{
+		// prints information to user
+
+		print("Log file found, proceeding to generate values translation...\n");
+
+		print("Translation in progress ...");
+
 		while (file) // while is open -> false when not reachable
 		{
 			std::getline(file, currentLine); // get line value
@@ -166,6 +172,11 @@ void LogReader::readAndTranslate(int g_mode)
 				outputFile << outputLineValue(currentReading); // write the line in the output file
 			}		
 		}
+		// removes translation in progress sentence
+		printf("\33[A\r");
+		printf("\33[2K\r");
+		// inform that the code finished
+		print("Translation completed ... [DONE]\nFile saved in: " + outputPath);
 	}
 	else
 	{
