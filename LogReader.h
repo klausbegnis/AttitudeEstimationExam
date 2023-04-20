@@ -6,7 +6,7 @@
 
 struct accelerometerReading
 {
-	double TimeStamp; // double for the case where math operations are required
+	int TimeStamp; // double for the case where math operations are required
 	// reading from aceleation portion on x,y and z axis
 	double Gx; 
 	double Gy;
@@ -79,12 +79,12 @@ struct accelerometerReading
 
 		// choose final theta value
 
+		// both solution in the determined range
 		if (sol1OK and sol2OK) {
-			quadrant = atan2(Gx, Gz); // the solution is at the same quadrant
-			//std::cout << solution1DEG << char(32) << solution2DEG << std::endl;
+			quadrant = atan2(Gx, Gz); // the solution is at the same quadrant from this result
+
 			if (quadrant / abs(quadrant) > 0) // means that is the positive solution
 			{
-				std::cout << "quadrant >0" << std::endl;
 				if (solution1DEG >= 0)
 				{
 					theta = solution1DEG;
@@ -94,7 +94,7 @@ struct accelerometerReading
 					theta = solution2DEG;
 				}
 			}
-			else
+			else // negative solution
 			{
 				if (solution1DEG <= 0)
 				{
@@ -106,8 +106,10 @@ struct accelerometerReading
 				}
 			}
 		}
+		// only first solution in the defined range
 		else if (sol1OK)
 			theta = solution1DEG;
+		// only second solution in the defined range
 		else if (sol2OK)
 			theta = solution2DEG;
 		else // no solutions available - instability zone
@@ -148,13 +150,14 @@ struct accelerometerReading
 		}
 
 		// choose final theta value
-
+		
+		// both solution in the determined range
 		if (sol1OK and sol2OK) {
-			quadrant = atan2(Gy, Gz); // the solution is at the same quadrant
-			//std::cout << solution1DEG << char(32) << solution2DEG << std::endl;
+			quadrant = atan2(Gy, Gz); // the solution is at the same quadrant from this result
+
 			if (quadrant/ abs(quadrant) > 0) // means that is the positive solution
 			{
-				std::cout << "quadrant >0" << std::endl;
+
 				if (solution1DEG >= 0)
 				{
 					phi = solution1DEG;
@@ -176,8 +179,10 @@ struct accelerometerReading
 				}
 			}
 		}
+		// only first solution in the defined range
 		else if (sol1OK)
 			phi = solution1DEG;
+		// only second solution in the defined range
 		else if (sol2OK)
 			phi = solution2DEG;
 		else // no solutions available - instability zone
@@ -191,10 +196,14 @@ class LogReader
 private:
 	char separator;
 	std::string path;
+	std::string outputPath;
 	void saveLine(std::string timestamp,accelerometerReading reading);
 	std::ifstream openFile();
+	std::string autoPath();
+	std::string outputLineValue(accelerometerReading reading);
 public:
 	void setPath(std::string input);
+	void setOuputPath(std::string output);
 	void setSeparator(char sep);
 	accelerometerReading translateLine(std::string line, int g_mode);
 	LogReader(std::string p);

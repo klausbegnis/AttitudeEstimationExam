@@ -1,4 +1,5 @@
 #include "LogReader.h"
+#include <iostream>
 #include <fstream> 
 #include <stdexcept>
 
@@ -73,7 +74,7 @@ accelerometerReading LogReader::translateLine(std::string line, int g_mode)
 			switch (read_Counting){
 
 			case time_stamp: // at timestamp
-				lineValue.TimeStamp = std::stod(currentValue);
+				lineValue.TimeStamp = std::stoi(currentValue);
 		
 			case gx: // at gx reading
 				lineValue.Gx = std::stod(currentValue) / lineValue.sensitivity;
@@ -110,11 +111,13 @@ void LogReader::readAndTranslate(int g_mode)
 	std::ifstream file = openFile();// input file stream class
 	std::string currentLine; // line to be read
 
+	std::ofstream outputFile; // ouput file 
+	outputFile.open(outputPath);
+
 	accelerometerReading currentReading;
 
-	if (file.is_open()) // if the file is opened
+	if (file.is_open() and outputFile.is_open()) // if the file is opened
 	{
-		int counter = 1;
 		while (file) // while is open -> false when not reachable
 		{
 			std::getline(file, currentLine); // get line value
@@ -123,26 +126,52 @@ void LogReader::readAndTranslate(int g_mode)
 			{
 				currentReading = translateLine(currentLine, g_mode); // save at readings struct
 				currentReading.solveAngles(); // initialize theta and phi values
-				print(counter);
-				print(' ');
-				print(currentReading.theta);
-				print(currentReading.phi);
-				counter++;
+				outputFile << outputLineValue(currentReading);
 			}		
 		}
 	}
+	else
+	{
+		print("It was not possible to open the specified file, check if it exists.");
+	}
+}
+
+std::string LogReader::autoPath()
+{
+	return "attitude_exam_out.log";
+}
+
+
+std::string LogReader::outputLineValue(accelerometerReading a)
+{
+	std::string line;
+	std::string spacing = { char(59),char(32) };
+
+	line = std::to_string(a.TimeStamp) + spacing + std::to_string(a.theta) + spacing + std::to_string(a.phi) +"\n";
+
+	return line;
+}
+
+void LogReader::setOuputPath(std::string output)
+{
+	outputPath = output;
 }
 
 // initializers
 
 LogReader::LogReader(std::string p)
 {
+
 	setPath(p);
+	outputPath = autoPath();
+	setOuputPath(outputPath);
 	setSeparator(char(59));
 }
 
 LogReader::LogReader(std::string p, char sep)
 {
 	setPath(p);
+	outputPath = autoPath();
+	setOuputPath(outputPath);
 	setSeparator(sep);
 }
