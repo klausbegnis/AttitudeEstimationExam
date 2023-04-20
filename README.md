@@ -25,7 +25,7 @@ Summarizing the calculations needed to process these information are presented a
 
 #### Table 2
 
-"""{=latex}
+```{=latex}
 \begin{table}[]
 \begin{tabular}{ll}
 \hline
@@ -37,4 +37,4 @@ $G_y$                          & *g*                        \\
 $G_z$                          & *g*                       
 \end{tabular}
 \end{table}
-"""
+```
