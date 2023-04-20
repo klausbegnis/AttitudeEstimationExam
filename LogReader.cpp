@@ -42,9 +42,12 @@ void LogReader::saveLine(std::string timestamp, accelerometerReading reading)
 {
 }
 
-accelerometerReading LogReader::translateLine(std::string line)
+accelerometerReading LogReader::translateLine(std::string line, int g_mode)
 {
 	accelerometerReading lineValue{}; // return value
+
+	// set sensitivity value
+	lineValue.refreshSensitivity(g_mode);
 
 	std::string currentValue; // retrieved value from line
 	// first value - > time stamp
@@ -73,13 +76,14 @@ accelerometerReading LogReader::translateLine(std::string line)
 				lineValue.TimeStamp = std::stod(currentValue);
 		
 			case gx: // at gx reading
-				lineValue.Gx = std::stod(currentValue);
+				lineValue.Gx = std::stod(currentValue) / lineValue.sensitivity;
 
 			case gy: // at gy reading
-				lineValue.Gy = std::stod(currentValue);
+				lineValue.Gy = std::stod(currentValue) / lineValue.sensitivity;
 
 			case gz: // at gz reading
-				lineValue.Gz = std::stod(currentValue+element); // to prevent
+				lineValue.Gz = std::stod(currentValue+element) / lineValue.sensitivity; 
+																// to prevent
 																// list out of bounds issues
 																// instead of making to else statement
 																// just adds automatically last value
@@ -96,37 +100,48 @@ accelerometerReading LogReader::translateLine(std::string line)
 		}
 	}
 
-	print(lineValue.TimeStamp); print(lineValue.Gx); print(lineValue.Gy); print(lineValue.Gz);
+	//print(lineValue.TimeStamp); print(lineValue.Gx); print(lineValue.Gy); print(lineValue.Gz);
 
 	return lineValue;
 }
 
+void LogReader::readAndTranslate(int g_mode)
+{
+	std::ifstream file = openFile();// input file stream class
+	std::string currentLine; // line to be read
+
+	accelerometerReading currentReading;
+
+	if (file.is_open()) // if the file is opened
+	{
+		int counter = 1;
+		while (file) // while is open -> false when not reachable
+		{
+			std::getline(file, currentLine); // get line value
+
+			if (currentLine.length() != 0) // checks if file not over
+			{
+				currentReading = translateLine(currentLine, g_mode); // save at readings struct
+				currentReading.solveAngles(); // initialize theta and phi values
+				print(counter);
+				print(' ');
+				print(currentReading.theta);
+				counter++;
+			}		
+		}
+	}
+}
+
+// initializers
+
 LogReader::LogReader(std::string p)
 {
 	setPath(p);
+	setSeparator(char(59));
 }
 
 LogReader::LogReader(std::string p, char sep)
 {
 	setPath(p);
 	setSeparator(sep);
-}
-
-void LogReader::readAndTranslate()
-{
-	std::ifstream file = openFile();// input file stream class
-	std::string currentLine; // line to be read
-	
-	accelerometerReading currentReading;
-
-	if (file.is_open()) // if the file is opened
-	{
-		while (file) // while is open -> false when not reachable
-		{
-			std::getline(file, currentLine); // get line value
-
-			currentReading = translateLine(currentLine);
-
-		}
-	}
 }
