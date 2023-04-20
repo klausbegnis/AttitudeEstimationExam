@@ -6,11 +6,14 @@
 
 struct accelerometerReading
 {
-	int TimeStamp; // double for the case where math operations are required
+
+	// struct designed to operate and save values from each read
+
+	int TimeStamp; // [ms]
 	// reading from aceleation portion on x,y and z axis
-	double Gx; 
-	double Gy;
-	double Gz;
+	double Gx; // [g]
+	double Gy; // [g]
+	double Gz; // [g]
 
 	// steering wheel angles
 	double theta;
@@ -20,6 +23,7 @@ struct accelerometerReading
 	// registers values 00; 01; 10;
 	enum scale		{	g2,	g4,	g8	};
 
+	// multiplier from the acceleration reading value
 	double sensitivity;
 	
 	void refreshSensitivity(int g_mode)
@@ -40,7 +44,7 @@ struct accelerometerReading
 	}
 
 	void solveAngles(){
-
+		// solve both angles values
 		solveTheta();
 		solvePhi();
 	}
@@ -167,7 +171,7 @@ struct accelerometerReading
 					phi = solution2DEG;
 				}
 			}
-			else
+			else // negative root is the correct solution
 			{
 				if (solution1DEG <= 0)
 				{
@@ -194,20 +198,32 @@ struct accelerometerReading
 class LogReader
 {
 private:
-	char separator;
-	std::string path;
-	std::string outputPath;
-	void saveLine(std::string timestamp,accelerometerReading reading);
-	std::ifstream openFile();
-	std::string autoPath();
-	std::string outputLineValue(accelerometerReading reading);
+
+	// attributes
+
+	// declarations
+	char separator; // char from the log file that separates information
+	std::string path; // path to the log file
+	std::string outputPath; // name for the output file
+
+	std::ifstream openFile(); // opens log file
+	std::string autoPath(); // originally designed created to designed output path
+							// now returns direct programmed string
+	std::string outputLineValue(accelerometerReading reading);	// struct that contains
+																// values from the reading info
+																// as well as functions to manipulate
+																// this values
 public:
-	void setPath(std::string input);
-	void setOuputPath(std::string output);
-	void setSeparator(char sep);
-	accelerometerReading translateLine(std::string line, int g_mode);
-	LogReader(std::string p);
-	LogReader(std::string p, char sep);
+	void setPath(std::string input); // set readings log path
+	void setOuputPath(std::string output); // sets output path
+	void setSeparator(char sep); // sets the separator for the log file to be read
+	accelerometerReading translateLine(std::string line, int g_mode);	// translates each line into the correspondent 
+																		// gx,gy,gz and timestamp
+	// different constructors possibilities
+	LogReader(std::string p, std::string outputpath);
+	LogReader(std::string p, std::string outputpath, char sep);
+
+	// routine to read all data, translate and save in the output file
 	void readAndTranslate(int g_mode);
 };
 
