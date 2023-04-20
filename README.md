@@ -65,4 +65,16 @@ One class was designed for the log reading/writing, `LogReader`, and it's attrib
 
 ### Table 4
 
+| Method             | Type                 | Visibility | Description                                                                                           |
+|--------------------|----------------------|------------|-------------------------------------------------------------------------------------------------------|
+| `setPath`          | void                 | public     | Sets attribute `path`.                                                                                |
+| `setOutputPath`    | void                 | public     | Sets attribute `outputPath`.                                                                          |
+| `setSeparator`     | void                 | public     | Sets attribute `separator`.                                                                           |
+| `translateLine`    | accelerometerReading | public     | Translates timestamp, $G_x$, $G_y$ and $G_z$ values.                                                  |
+| `readAndTranslate` | void                 | public     | Classe's main method, start the process from reading and writing.                                     |
+| `openFile`         | ifstream             | private    | Opens input log file.                                                                                 |
+| `autoPath`         | string               | private    | Returns default name for output file. It's called only when output path not specfied.                 |
+| `outputLineValue`  | string               | private    | String containing the line to be added at the output file. In the format: timestamp; $\theta$; $\phi$ |
+
+
 
