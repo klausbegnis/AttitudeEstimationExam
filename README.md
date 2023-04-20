@@ -47,4 +47,22 @@ $\theta = tan^{-1}\frac{-G_x}{\sqrt{G_y^2 + G_z^2}}$
 
 $\theta = tan^{-1}(\frac{-G_x}{G_z})$
 
-As two solutions are found for each angle, and both with same module but with opposite signals. To find the correct quadrant of the correct response, the function $ATAN2(G_i,G_j)% is used, where for $\theta$ $i = x$ and $j = z$, while $i = y$ and $j = z$ for $\phi$.
+As two solutions are found for each angle, and both have the same module but with opposite signals, to find the correct quadrant of the correct answer, the function $ATAN2(G_i,G_j)% is used. Where for $\theta$ $i = x$ and $j = z$, while $i = y$ and $j = z$ for $\phi$.
+
+### Code overview
+
+The code was developed using object orientation paradigm, which enriched the possibilitie to replicate code and readability.
+
+One class was designed for the log reading/writing, `LogReader`, and it's attributes and methods are shown in Table 3 and Table 4, respectively.
+
+### Table 3
+
+| Attribute   | Type   | Visibility | Description                                |
+|-------------|--------|------------|--------------------------------------------|
+| `separator` | char   | private    | Character to separate values at log files. |
+| `path`      | string | private    | Path to input log file.                    |
+| `outputPath`    | string | private    | Path to output log file.                   |
+
+### Table 4
+
+
