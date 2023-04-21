@@ -84,7 +84,7 @@ struct accelerometerReading
 		// choose final theta value
 
 		// both solution in the determined range
-		if (sol1OK and sol2OK) {
+		if (sol1OK && sol2OK) {
 			quadrant = atan2(Gx, Gz); // the solution is at the same quadrant from this result
 
 			if (quadrant / abs(quadrant) > 0) // means that is the positive solution
@@ -156,7 +156,7 @@ struct accelerometerReading
 		// choose final theta value
 		
 		// both solution in the determined range
-		if (sol1OK and sol2OK) {
+		if (sol1OK && sol2OK) {
 			quadrant = atan2(Gy, Gz); // the solution is at the same quadrant from this result
 
 			if (quadrant/ abs(quadrant) > 0) // means that is the positive solution

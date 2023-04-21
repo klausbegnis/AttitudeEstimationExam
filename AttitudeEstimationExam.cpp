@@ -23,10 +23,10 @@ int main(int argc,char* argv[])
         {
             // if type in outputpath
             if (outputpath[i] == '.')
-                typeInOutput == true;
+                typeInOutput = true;
                
         }
-        if (not(typeInOutput))
+        if (!typeInOutput)
         {
             // add log type
             outputpath += ".log";

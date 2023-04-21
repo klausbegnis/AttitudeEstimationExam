@@ -77,9 +77,11 @@ One class was designed for the log reading/writing, `LogReader`, and it's attrib
 | `outputLineValue`  | string               | private    | String containing the line to be added at the output file. In the format: timestamp; $\theta$; $\phi$ |
 
 
-Another important composition from the code is the `accelerometerReading`. This struct was created to memorize the values from the $G_n$ information and perform mathematical calculation, such as the presented in Equations 1-4. It was chosen to utilize the C++ ```struct``` instead of `class` because its methods were purely mathematical, beign this a convention adopted while coding. Furthermore, the usage of a ``` struct``` allows direct convertion to C language, which is a interesting feature when applied to a embedded system, allowing the conversion of the sensed values to degrees and discovering the steering wheel orientation. The `LogReader` ```class``` wouldn't be the case of a embedded system, once its purpose is post data collection, that also explains why a ```class``` was utilized.
+Another important composition from the code is the `accelerometerReading`. This struct was created to memorize the values from the $G_n$ information and perform mathematical calculation, such as the presented in Equations 1-4. It was chosen to utilize the C++ ```struct``` instead of `class` because its methods were purely mathematical, beign this a convention adopted while coding. Furthermore, the usage of a ```struct``` allows direct convertion to C language, which is a interesting feature when applied to a embedded system, allowing the conversion of the sensed values to degrees and discovering the steering wheel orientation. The `LogReader` ```class``` wouldn't be the case of a embedded system, once its purpose is post data collection, that also explains why a ```class``` was utilized.
 
 ## How to use
+
+
 
 ### Compiling the code
 

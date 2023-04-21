@@ -63,6 +63,7 @@ std::ifstream LogReader::openFile()
 	{
 		// catch errors at opening file
 		print("Error ocurred while opening file");
+		return file;
 	}
 }
 
@@ -81,6 +82,7 @@ accelerometerReading LogReader::translateLine(std::string line, int g_mode)
 	// second value - > gx
 	// third value - > gy
 	// fourth value - > gz
+	char element;
 
 	// usage for switch/case structure
 	enum read { time_stamp,gx,gy,gz };
@@ -90,19 +92,19 @@ accelerometerReading LogReader::translateLine(std::string line, int g_mode)
 	for (int i = 0; i < line.size(); i++)
 	{
 		// get line values
-		char element = line[i];
-		
+		element = line[i];
+
 		// tests if one of the parameters has ended or if the file has ended
-		if ((element == separator) or (i == line.size()-1)) // value finished
+		if ((element == separator) || (i == line.size() - 1)) // value finished
 		{
 			i++; // jumps space an goes to next value
 
 			// checks current value position
-			switch (read_Counting){
+			switch (read_Counting) {
 
 			case time_stamp: // at timestamp
 				lineValue.TimeStamp = std::stoi(currentValue); // [ms]
-		
+
 			case gx: // at gx reading
 				lineValue.Gx = std::stod(currentValue) / lineValue.sensitivity; // [g]
 
@@ -110,23 +112,23 @@ accelerometerReading LogReader::translateLine(std::string line, int g_mode)
 				lineValue.Gy = std::stod(currentValue) / lineValue.sensitivity; // [g]
 
 			case gz: // at gz reading
-				lineValue.Gz = std::stod(currentValue+element) / lineValue.sensitivity; // [g]
-																// to prevent
-																// list out of bounds issues
-																// instead of making to else statement
-																// just adds automatically last value
+				lineValue.Gz = std::stod(currentValue + element) / lineValue.sensitivity; // [g]
+				// to prevent
+				// list out of bounds issues
+				// instead of making to else statement
+				// just adds automatically last value
 			}
 			// steps to next value
 			read_Counting++;
 			// reset current value
 			currentValue = "";
 		}
-		else 
+		else
 		{
 			// increment reading
-			currentValue+=element;
-		}
-	}
+			currentValue += element;
+		};
+	};
 
 	//print(lineValue.TimeStamp); print(lineValue.Gx); print(lineValue.Gy); print(lineValue.Gz);
 
@@ -144,7 +146,7 @@ void LogReader::readAndTranslate(int g_mode)
 	std::ofstream outputFile; // output file 
 	outputFile.open(outputPath); // opens output file
 
-	if (not(outputFile.is_open())) // if output file not inserted
+	if (!outputFile.is_open()) // if output file not inserted
 	{
 		outputPath = autoPath(); // autogenerates outputpath
 		outputFile.open(outputPath); // will overwrite existing files from previous readings
@@ -153,7 +155,7 @@ void LogReader::readAndTranslate(int g_mode)
 	accelerometerReading currentReading; // initialize reading struct
 
 
-	if (file.is_open() and outputFile.is_open()) // if the file is opened
+	if (file.is_open() && outputFile.is_open()) // if the file is opened
 	{
 		// prints information to user
 
