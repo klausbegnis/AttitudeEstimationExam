@@ -131,3 +131,8 @@ All this commands will work properly, if no arguments are used, the application 
 ## Results
 
 The file named `auto_out.log` has the output from the program's execution and contains the data needed for the exam.
+
+The results were plotted using the external software Excel, the result is showed as following:
+
+![Alt text](./graphic.svg)
+<img src="./graphic.svg">
