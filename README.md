@@ -4,9 +4,9 @@ by Klaus Edward Becker Begnis
 
 ## Task development
 
-The task consisted of developing an algorithm that reads values from a log file with data aquired from a accelerometer.
+The task consisted of developing an algorithm that reads values from a log file with data aquired from an accelerometer.
 
-The accelerometer in question is the [MMA8451Q](https://www.nxp.com/docs/en/data-sheet/MMA8451Q.pdf). When the data were aquired, the accelerometer was setted in the 8*g* configuration, this configuration reflects directyly into the sensibility factor from the reading performed, as Table 1 shows.
+The accelerometer in question is the [MMA8451Q](https://www.nxp.com/docs/en/data-sheet/MMA8451Q.pdf). When the data were aquired, the accelerometer was set to the 8*g* configuration. This configuration directly reflects the sensibility factor from the readings, as Table 1 presents.
 
 #### Table 1		
 | Configuration | Sensitivity       |
@@ -19,7 +19,7 @@ The accelerometer in question is the [MMA8451Q](https://www.nxp.com/docs/en/data
 
 The values obtained reflected acceleration values in a 3-axis system. To convert this values and discover the roll and pitch values in degrees, the subsequent [article](http://www.nxp.com/docs/en/application-note/AN3461.pdf) was followed.
 
-Summarizing the calculations needed to process these information are presented at Equation 1-4, and each variable is presented at Table 2.
+In summary, the calculations needed to process these informations are presented at Equation 1-4, and each variable is presented at Table 2.
 
 ### Table 2
 | Variable		| Unit       |
@@ -47,13 +47,13 @@ $\theta = tan^{-1}\frac{-G_x}{\sqrt{G_y^2 + G_z^2}}$
 
 $\theta = tan^{-1}(\frac{-G_x}{G_z})$
 
-As two solutions are found for each angle, and both have the same module but with opposite signals, to find the correct quadrant of the correct answer, the function $ATAN2(G_i,G_j)% is used. Where for $\theta$ $i = x$ and $j = z$, while $i = y$ and $j = z$ for $\phi$.
+As two solutions are found for each angle, and both have the same module but with opposite signals, to find the correct quadrant of the correct answer, the function $ATAN2(G_i,G_j)$ is used. Where for $\theta$ $i = x$ and $j = z$, while $i = y$ and $j = z$ for $\phi$.
 
 ### Code overview
 
-The code was developed using object orientation paradigm, which enriched the possibilitie to replicate code and readability.
+The code was developed using the object orientation paradigm, which enriched the possibility to replicate the code and improved readability.
 
-One class was designed for the log reading/writing, `LogReader`, and it's attributes and methods are shown in Table 3 and Table 4, respectively.
+One class was designed for the log reading/writing, `LogReader`, and its attributes and methods are shown in Table 3 and Table 4, respectively.
 
 ### Table 3
 
@@ -77,7 +77,7 @@ One class was designed for the log reading/writing, `LogReader`, and it's attrib
 | `outputLineValue`  | string               | private    | String containing the line to be added at the output file. In the format: timestamp; $\theta$; $\phi$ |
 
 
-Another important composition from the code is the `accelerometerReading`. This struct was created to memorize the values from the $G_n$ information and perform mathematical calculation, such as the presented in Equations 1-4. It was chosen to utilize the C++ ```struct``` instead of `class` because its methods were purely mathematical, beign this a convention adopted while coding. Furthermore, the usage of a ```struct``` allows direct convertion to C language, which is a interesting feature when applied to a embedded system, allowing the conversion of the sensed values to degrees and discovering the steering wheel orientation. The `LogReader` ```class``` wouldn't be the case of a embedded system, once its purpose is post data collection, that also explains why a ```class``` was utilized.
+Another important component from the code is the `accelerometerReading`. This struct was created to store the values from the $G_n$ information and perform mathematical calculations, such as those presented in Equations 1-4. It was chosen to utilize the C++ ```struct``` instead of a `class` because its methods were purely mathematical. This is a convention thaw was adopted while coding. Furthermore, the usage of a ```struct``` allows conversion to C language, which is an interesting feature when applied to an embedded system. This allows the conversion of the sensed values to degrees and the discovering the steering wheel orientation. The `LogReader` ```class``` wouldn't be used in an embedded system, since its purpose is to process data collection.
 
 ## How to use
 
@@ -85,19 +85,19 @@ To use this application, the first thing needed is to compile the project.
 
 ### Compiling the code
 
-To compile the code a compiler installed is needed, such as `gcc` or Visual Studio's `cl`.
+To compile the code, a compiler such as `gcc` or Visual Studio's `cl` must be installed.
 
-To compile using Visual Studio's compiler, first, open the developer's prompt, it can be `CMD Prompt` or `PowerShell`, acess the repositorie directory and then perform the following command:
+To compile using Visual Studio's compiler, first open the developer command prompt. This can be either the `CMD Prompt` or `PowerShell`. Then, acess the repositorie directory and perform the following command:
 
 ```console
 cl /EHsc AttitudeEstimationExam.cpp LogReader.cpp
 ```
 
-This command will compile the program, some warnings may appear, deppending on the compiler's version.
+This command will compile the program. Depending on the version of the compiler, some warnings may appear.
 
 The output executable will be named as `AttitudeEstimationExam.exe`.
 
-If `gcc` will be used, in any console type:
+If `gcc` will be used, type in any console:
 
 ```console
 gcc AttitudeEstimationExam.c LogReader.c
@@ -107,10 +107,9 @@ The `gcc` compiler wasn't tested, but it should work just fine.
 
 ### Executing the application
 
-Both compilers will create a executable file, this will contain all the project information and is where the applications is runned.
+Both compilers will create an executable file. This file will contain all the necessary project information and will be where the application is run.
 
-To use this file, you will need one mandatory argumen, specifying the location from the log file to be read. Optionally, you can decide the output file name.
-
+To use this file, you will need to specify one mandatory argument, which specifies the location of the log file to be read. Optionally, you can decide on the output file name.
 Example:
 
 ```console
@@ -126,12 +125,13 @@ AttitudeEstimationExam.exe .\logs\attitude_exam.log output.log
 AttitudeEstimationExam.exe .\logs\attitude_exam.log out
 ```
  
-All this commands will work properly, if no arguments are used, the application will inform the user about it, and assist with the needed command. The first example it's not recommended, once it will overwrite the `auto_out.log` file, leading to loss of data from previous estimations.
-
+All of these commands will work properly. If no arguments are used, the application will inform the user about it and assist them with the required command.
+However, the first example is not recommended. This is because it will overwrite the auto_out.log file, leading to the loss of data from previous estimations.
 ## Results
 
 The file named `auto_out.log` has the output from the program's execution and contains the data needed for the exam.
 
-The results were plotted using the external software Excel, the result is showed as following:
+The results were plotted using the external software Excel.
+The result is showed as following:
 
 ![Alt text](./graphic.svg)
