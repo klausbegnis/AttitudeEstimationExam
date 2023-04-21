@@ -135,4 +135,3 @@ The file named `auto_out.log` has the output from the program's execution and co
 The results were plotted using the external software Excel, the result is showed as following:
 
 ![Alt text](./graphic.svg)
-<img src="./graphic.svg">
