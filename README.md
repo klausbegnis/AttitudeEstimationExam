@@ -125,5 +125,9 @@ AttitudeEstimationExam.exe .\logs\attitude_exam.log output.log
 ```console
 AttitudeEstimationExam.exe .\logs\attitude_exam.log out
 ```
+ 
+All this commands will work properly, if no arguments are used, the application will inform the user about it, and assist with the needed command. The first example it's not recommended, once it will overwrite the `auto_out.log` file, leading to loss of data from previous estimations.
 
-All this commands will work properly, if no arguments are used, the application will inform the user about it, and assist with the needed command.
+## Results
+
+The file named `auto_out.log` has the output from the program's execution and contains the data needed for the exam.
