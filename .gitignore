@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 #*.log
 /bbbb.log
+/AttitudeEstimationExam.exe
+/ut
