@@ -134,4 +134,5 @@ The file named `auto_out.log` has the output from the program's execution and co
 The results were plotted using the external software Excel.
 The result is showed as following:
 
+### Steering wheel rotation over time
 ![Alt text](./graphic.svg)
