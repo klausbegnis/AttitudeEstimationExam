@@ -81,9 +81,49 @@ Another important composition from the code is the `accelerometerReading`. This 
 
 ## How to use
 
-
+To use this application, the first thing needed is to compile the project.
 
 ### Compiling the code
 
+To compile the code a compiler installed is needed, such as `gcc` or Visual Studio's `cl`.
+
+To compile using Visual Studio's compiler, first, open the developer's prompt, it can be `CMD Prompt` or `PowerShell`, acess the repositorie directory and then perform the following command:
+
+```console
+cl /EHsc AttitudeEstimationExam.cpp LogReader.cpp
+```
+
+This command will compile the program, some warnings may appear, deppending on the compiler's version.
+
+The output executable will be named as `AttitudeEstimationExam.exe`.
+
+If `gcc` will be used, in any console type:
+
+```console
+gcc AttitudeEstimationExam.c LogReader.c
+```
+
+The `gcc` compiler wasn't tested, but it should work just fine.
+
 ### Executing the application
 
+Both compilers will create a executable file, this will contain all the project information and is where the applications is runned.
+
+To use this file, you will need one mandatory argumen, specifying the location from the log file to be read. Optionally, you can decide the output file name.
+
+Example:
+
+```console
+AttitudeEstimationExam.exe .\logs\attitude_exam.log
+```
+
+```console
+AttitudeEstimationExam.exe .\logs\attitude_exam.log output.log
+```
+
+
+```console
+AttitudeEstimationExam.exe .\logs\attitude_exam.log out
+```
+
+All this commands will work properly, if no arguments are used, the application will inform the user about it, and assist with the needed command.
